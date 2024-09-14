@@ -1,0 +1,347 @@
+#    -*- mode: org -*-
+#+OPTIONS: reveal_center:t reveal_progress:nil reveal_history:nil reveal_control:nil
+#+OPTIONS: reveal_mathjax:t reveal_rolling_links:nil reveal_keyboard:t reveal_overview:t num:nil
+#+OPTIONS: reveal_width:1600 reveal_height:900
+#+OPTIONS: toc:nil <:nil timestamp:nil email:t reveal_slide_number:"c/t"
+#+OPTIONS: ^:{}
+#+REVEAL_MARGIN: 0.1
+#+REVEAL_MIN_SCALE: 0.5
+#+REVEAL_MAX_SCALE: 2.5
+#+REVEAL_TRANS: none
+#+REVEAL_THEME: white
+#+REVEAL_HLEVEL: 1
+#+REVEAL_EXTRA_CSS: ./presentation.css
+#+REVEAL_EXTRA_CSS: ./emoji.css
+#+REVEAL_ROOT: ../reveal.js/
+#+MACRO: hilite @@html:<span style="color:#830352">$1</span>@@
+#+MACRO: fontsize @@html:<span style="font-size:$1px">$2</span>@@
+#+MACRO: hilitefontsize @@html:<span style="color:#830352; font-size:$1px">$2</span>@@
+
+#+TITLE: What LLMs can't ever do
+#+SUBTITLE: A Short Introduction to Cryptic Crosswords
+#+AUTHOR: Ben Deane
+#+DATE: 2024-09-19
+
+* not for export                                                   :noexport:
+#+begin_src emacs-lisp
+#+end_src
+
+#+REVEAL_HTML: <script type="text/javascript" src="./presentation.js"></script>
+#+REVEAL_TITLE_SLIDE: <h2>%t</h2><h3>%s</h3><img src="qr_code.png" style="width:600px"><h4>%a / CppCon / %d</h4>
+#+REVEAL_DEFAULT_SLIDE_BACKGROUND: ./background_qr_code.png
+#+REVEAL_DEFAULT_SLIDE_BACKGROUND_SIZE: 2000px
+
+* What are Cryptic Crosswords?
+#+REVEAL_HTML: <div class='vertspace1'></div>
+A style of crossword most popular in the UK, little-known in the US.
+
+Every quality UK newspaper (e.g. /The Times/, /The Guardian/, /The Independent/)\\
+publishes one every day.
+
+They are followed by a non-vocal fandom...
+
+* US vs UK
+#+REVEAL_HTML: <div class='vertspace1'></div>
+The grids are quite different.
+
+#+ATTR_HTML: :width 40% :align left
+#+REVEAL_HTML: <img src="nytimes.png" style="width:500px; height:500px">
+
+#+ATTR_HTML: :width 40% :align right
+#+REVEAL_HTML: <img src="guardian.png" style="width:500px; height:500px">
+
+* The Clues
+#+REVEAL_HTML: <div class='vertspace1'></div>
+"Normal" (so-called "quick") crossword clues are often\\
+straightforward synonymous definitions.
+
+~US State, Capital Boise (5)~
+
+#+REVEAL_HTML: <div class='vertspace1'></div>
+Cryptic clues are... more twisted.
+
+But there are rules! And conventions!
+
+* Clue breakdown
+#+REVEAL_HTML: <div class='vertspace1'></div>
+Every* clue points to the answer in two ways:
+
+Somewhere in the clue (usually at one end or the other) is the /definition/.
+
+The rest of the clue is the /wordplay/. When decoded, it will give the same answer.
+
+#+REVEAL_HTML: <div class='vertspace1'></div>
+Clues are designed to throw you off the scent: you must /ignore/ the /surface/
+meaning, punctuation, etc, and consider carefully each word.\\
+In a good clue, no word is superfluous.
+
+#+REVEAL_HTML: <div class='vertspace1'></div>
+Clues may not mean what they (appear to) say, but they must say what they mean!
+
+* Clue type: Anagram
+#+REVEAL_HTML: <div class='vertspace1'></div>
+One of the easiest types of clue is the anagram.
+
+#+REVEAL_HTML: <div class='vertspace1'></div>
+~Spin doctor live, on tour (10)~
+
+#+REVEAL_HTML: <div class='vertspace1'></div>
+Many many words can be anagram indicators: anything that suggests letters being
+potentially changed, upset, moved, made anew, etc.
+
+#+REVEAL_HTML: <div class='vertspace1'></div>
+#+ATTR_REVEAL: :frag (appear)
+~REVOLUTION~\\
+("doctor" LIVE ON TOUR)
+
+* Clue type: Hidden
+#+REVEAL_HTML: <div class='vertspace1'></div>
+Another "easy" one.
+
+Sometimes (usually not more than once per puzzle) the answer
+is hidden directly inside the clue, either forwards or backwards. This is
+indicated by a suitable word like "some".
+
+You would /think/ this would make it easy.
+
+#+REVEAL_HTML: <div class='vertspace1'></div>
+~Maybe wearing some larger undies (6)~
+
+#+REVEAL_HTML: <div class='vertspace1'></div>
+#+ATTR_REVEAL: :frag (appear)
+~GERUND~\\
+("wearing" is one example -- "maybe" -- of a gerund)
+
+* Clue type: Cryptic Definition
+#+REVEAL_HTML: <div class='vertspace1'></div>
+Sometimes* the answer is clued in a playful way.
+
+#+REVEAL_HTML: <div class='vertspace1'></div>
+~Fallout when the deal is subjected to cuts? (7)~
+
+#+REVEAL_HTML: <div class='vertspace1'></div>
+*Almost always. Straight definitions are rare and\\
+would be considered poor in a cryptic clue.
+
+#+REVEAL_HTML: <div class='vertspace1'></div>
+#+ATTR_REVEAL: :frag (appear)
+~SAWDUST~\\
+(*deal*​² /noun/ a plank or planks of soft wood)
+
+* Clue type: Double Definition
+#+REVEAL_HTML: <div class='vertspace1'></div>
+A two word clue is very often a double definition.
+
+Both words, interpreted in the right way, mean the same thing - the answer.
+
+#+REVEAL_HTML: <div class='vertspace1'></div>
+~Potty train (4)~
+
+#+REVEAL_HTML: <div class='vertspace1'></div>
+DDs can be more than two words, of course.
+
+#+REVEAL_HTML: <div class='vertspace1'></div>
+#+ATTR_REVEAL: :frag (appear)
+~LOCO~\\
+(*potty*​¹ /adj/ /colloq/ mad; crazy)
+
+* Clue type: Charade
+#+REVEAL_HTML: <div class='vertspace1'></div>
+A very common type of clue has the answer made up from parts put together. The
+parts might be obtained using other tricks in the setter's arsenal.
+
+#+REVEAL_HTML: <div class='vertspace1'></div>
+~Former lover can court no more (7)~
+
+#+REVEAL_HTML: <div class='vertspace1'></div>
+#+ATTR_REVEAL: :frag (appear)
+~EXTINCT~\\
+("former lover" = EX, "can" = TIN, "court" = CT)
+
+* Other Common Devices
+#+REVEAL_HTML: <div class='vertspace1'></div>
+ - Using letters from the start/end/middle of words
+ - Letter deletions from words
+ - Taking alternate letters from a word
+ - Reversing words
+ - Substitutions
+ - Spoonerisms
+ - Homophones (it helps to have a British accent)
+
+#+REVEAL_HTML: <div class='vertspace1'></div>
+~Cut disease with unlimited money (1-4)~
+
+#+REVEAL_HTML: <div class='vertspace1'></div>
+#+ATTR_REVEAL: :frag (appear)
+~T-BONE~
+
+* Abbreviations
+#+REVEAL_HTML: <div class='vertspace1'></div>
+You would be surprised how many meanings are given (/in the dictionary/)\\
+to each single letter.
+
+But: you /cannot just/ abbreviate any word to its initial letter;\\
+it /must/ be in the dictionary (often Chambers).
+
+e.g. The letter R is fairly clued by any of:\\
+right, river, King (/Rex/), Queen (/Regina/), resistance, run.\\
+Or even: take (/recipe/)!
+
+But not e.g. rabbit.
+
+* Clue type: &lit
+#+REVEAL_HTML: <div class='vertspace1'></div>
+The "holy grail" clue where the whole clue is both the definition and the
+wordplay. Quite rare.
+
+#+REVEAL_HTML: <div class='vertspace1'></div>
+~A position with game in front of it (6)~
+
+#+REVEAL_HTML: <div class='vertspace1'></div>
+#+ATTR_REVEAL: :frag (appear)
+~GOALIE~\\
+("A position" = A LIE, "game" = GO)
+
+* A thing of beauty
+#+REVEAL_HTML: <div class='vertspace1'></div>
+Sometimes a clue can be so good, it makes your whole week.
+
+#+REVEAL_HTML: <div class='vertspace1'></div>
+~Such sickness and suffering originate with medic, ultimately (10)~
+
+#+REVEAL_HTML: <div class='vertspace1'></div>
+#+ATTR_REVEAL: :frag (appear)
+~IATROGENIC~\\
+(Anagram [suffering] of ORIGINATE with last letter [ultimately] of mediC)
+
+* Styles and setters
+#+REVEAL_HTML: <div class='vertspace1'></div>
+Each crossword is the work of one person (the /setter/).\\
+Different setters have different styles.
+
+ - When I see Fed, it's going to involve lots of letter-play, some deviousness
+ - When I see Paul, there's going to be cross-referential clues, risque surfaces
+ - When I see Pasquale, there will be some recondite words
+ - When I see Brummie or Picaroon, I'm good - it's going to be chewy but doable
+ - When I see Imogen, I cry... I am not on their wavelength at all
+
+A setter's job is to put up a good fight, and lose bravely.
+
+RIP Nutmeg, one of the best for smooth surfaces and fair clueing.
+
+* Cryptics affect your mind
+#+REVEAL_HTML: <div class='vertspace1'></div>
+#+REVEAL_HTML: <table style="margin:0 auto">
+#+REVEAL_HTML: <tbody><tr><th>You see...</th><th>You think...</th></tr>
+#+REVEAL_HTML: <tr><td>"banker" or "flower"</td><td>river</td></tr>
+#+REVEAL_HTML: <tr><td>"issue"</td><td>children</td></tr>
+#+REVEAL_HTML: <tr><td>"sweetheart"</td><td>E</td></tr>
+#+REVEAL_HTML: <tr><td>"unknown"</td><td>X, Y, Z</td></tr>
+#+REVEAL_HTML: <tr><td>"corporation"</td><td>tum</td></tr>
+#+REVEAL_HTML: <tr><td>"Nice day"</td><td>jour</td></tr>
+#+REVEAL_HTML: <tr><td>"leg"</td><td>on</td></tr>
+#+REVEAL_HTML: <tr><td>"posh"</td><td>U</td></tr>
+#+REVEAL_HTML: </tbody></table>
+
+* How on earth...?
+#+REVEAL_HTML: <div class='vertspace1'></div>
+You get reasonably good at them after some years (decades?) of daily practice.
+
+#+REVEAL_HTML: <div class='vertspace1'></div>
+Among many other things, you should have some knowledge of: Greek/Roman/Norse
+myths; classic (and classical) literature; Shakespeare; current events;
+pre-decimal British currency; military abbreviations; sporting and gaming terms,
+especially cricket, golf, chess, and bridge; musical terms; high school French;
+Latin phrases; the NATO alphabet; Roman numerals; Greek letters; the Periodic
+Table; countries; cities; rivers; currencies; Cockney rhyming slang; and short
+synonyms and examples of anything and everything.
+
+* Now for the question
+#+REVEAL_HTML: <div class='vertspace1'></div>
+Can ChatGPT solve cryptic crossword clues?
+
+Of course, the answer is: no.
+
+Ironically, cryptics /are/ quite doable by specialized programs...
+
+* A short conversation
+"I'm going to give you cryptic crossword clues and I'd like you to solve them
+and explain the solution.
+
+#+REVEAL_HTML: <div class='vertspace1'></div>
+
+#+ATTR_REVEAL: :frag (appear)
+"Sure! I'd be happy to help you solve cryptic crossword clues.
+
+#+ATTR_REVEAL: :frag (appear)
+To solve a cryptic crossword clue, [{{{hilite(blah blah blah explanation we don't need)}}}].
+
+#+ATTR_REVEAL: :frag (appear)
+To start, could you give me one of the clues that you would like me to solve?
+
+* A short conversation
+"Owl pursuing pussycat that's possibly ours, grabbing it (6)"
+
+#+ATTR_REVEAL: :frag (appear)
+"In this clue, the word "owl" is a hint\\
+that the answer is a type of bird. [{{{hilite(wrong)}}}]
+
+#+ATTR_REVEAL: :frag (appear)
+The word "pursuing" suggests that the answer is something that is following or
+chasing something else, which could be the word "pussycat." [{{{hilite(uhhh...)}}}]
+
+#+ATTR_REVEAL: :frag (appear)
+The word "that's possibly ours" could be a hint that the answer is a word that
+sounds like "ours." [{{{hilite(wrong)}}}]
+
+#+ATTR_REVEAL: :frag (appear)
+Taking all of these clues into consideration, it seems likely that the answer to
+this clue is the word "spoon." [{{{hilite(wrong)}}}]
+
+#+ATTR_REVEAL: :frag (appear)
+"Spoon" is a type of bird that is known for its ability to follow and chase
+insects, and it also sounds like the word "pursue." [{{{hilite(???)}}}]
+
+#+ATTR_REVEAL: :frag (appear)
+"Grabbing" the word "pussycat" could be a hint that the answer is a type of
+spoon, such as a dessert spoon or a tablespoon. The answer to this clue is
+therefore "SPOON."
+
+* A short conversation
+"That's not right. The answer is SUITOR. Can you explain why?
+
+#+ATTR_REVEAL: :frag (appear)
+"I apologize for the mistake in my previous response. You are correct that the
+answer to this clue is SUITOR.
+
+#+ATTR_REVEAL: :frag (appear)
+[blah blah blah]
+
+#+ATTR_REVEAL: :frag (appear)
+When we put these two clues together, we get the word "SUITOR," which fits the
+definition of the answer and also sounds like "pussycat" and "ours."
+
+#+ATTR_REVEAL: :frag (appear)
+Therefore, the answer to this clue is SUITOR.
+
+* LLMs will never do cryptics
+#+REVEAL_HTML: <div class='vertspace1'></div>
+There are some things LLMs will (/should/) never do.
+
+Cryptic crosswords are in that category.
+
+#+REVEAL_HTML: <div class='vertspace1'></div>
+~Prince left island country to pursue posh college dream (13)~
+
+ - The /point/ of a cryptic clue is to /subvert the normal/ interpretation (the opposite of
+what LLMs are designed to deal with)
+
+ - Solving a cryptic is like reading a book: it's a connection with the author.
+What would be the point of using a computer?
+
+
+* Thank you
+#+REVEAL_HTML: <div class='vertspace1'></div>
+Try this CppCon cryptic crossword!
+
+#+REVEAL_HTML: <img src="qr_code.png" style="height:600px">

@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>What LLMs can't ever do</title>
+<meta name="author" content="Ben Deane"/>
+<style type="text/css">
+.underline { text-decoration: underline; }
+</style>
+<link rel="stylesheet" href="../reveal.js/dist/reveal.css"/>
+
+<link rel="stylesheet" href="../reveal.js/dist/theme/white.css" id="theme"/>
+
+<link rel="stylesheet" href="./presentation.css"/>
+
+<link rel="stylesheet" href="./emoji.css"/>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+<section id="sec-title-slide">
+<h2>What LLMs can't ever do</h2><h3>A Short Introduction to Cryptic Crosswords</h3><img src="qr_code.png" style="width:600px"><h4>Ben Deane / CppCon / 2024-09-19</h4>
+</section>
+
+<section>
+<section id="slide-orgb742aff" data-background="./background_qr_code.png" data-background-size="2000px">
+<h2 id="orgb742aff">What are Cryptic Crosswords?</h2>
+<div class='vertspace1'></div>
+<p>
+A style of crossword most popular in the UK, little-known in the US.
+</p>
+
+<p>
+Every quality UK newspaper (e.g. <i>The Times</i>, <i>The Guardian</i>, <i>The Independent</i>)<br />
+publishes one every day.
+</p>
+
+<p>
+They are followed by a non-vocal fandom&#x2026;
+</p>
+
+</section>
+</section>
+<section>
+<section id="slide-org90a6d10" data-background="./background_qr_code.png" data-background-size="2000px">
+<h2 id="org90a6d10">US vs UK</h2>
+<div class='vertspace1'></div>
+<p>
+The grids are quite different.
+</p>
+
+<img src="nytimes.png" style="width:500px; height:500px">
+
+<img src="guardian.png" style="width:500px; height:500px">
+
+</section>
+</section>
+<section>
+<section id="slide-orge2eb021" data-background="./background_qr_code.png" data-background-size="2000px">
+<h2 id="orge2eb021">The Clues</h2>
+<div class='vertspace1'></div>
+<p>
+"Normal" (so-called "quick") crossword clues are often<br />
+straightforward synonymous definitions.
+</p>
+
+<p>
+<code>US State, Capital Boise (5)</code>
+</p>
+
+<div class='vertspace1'></div>
+<p>
+Cryptic clues are&#x2026; more twisted.
+</p>
+
+<p>
+But there are rules! And conventions!
+</p>
+
+</section>
+</section>
+<section>
+<section id="slide-orgd513ae6" data-background="./background_qr_code.png" data-background-size="2000px">
+<h2 id="orgd513ae6">Clue breakdown</h2>
+<div class='vertspace1'></div>
+<p>
+Every* clue points to the answer in two ways:
+</p>
+
+<p>
+Somewhere in the clue (usually at one end or the other) is the <i>definition</i>.
+</p>
+
+<p>
+The rest of the clue is the <i>wordplay</i>. When decoded, it will give the same answer.
+</p>
+
+<div class='vertspace1'></div>
+<p>
+Clues are designed to throw you off the scent: you must <i>ignore</i> the <i>surface</i>
+meaning, punctuation, etc, and consider carefully each word.<br />
+In a good clue, no word is superfluous.
+</p>
+
+<div class='vertspace1'></div>
+<p>
+Clues may not mean what they (appear to) say, but they must say what they mean!
+</p>
+
+</section>
+</section>
+<section>
+<section id="slide-org9456155" data-background="./background_qr_code.png" data-background-size="2000px">
+<h2 id="org9456155">Clue type: Anagram</h2>
+<div class='vertspace1'></div>
+<p>
+One of the easiest types of clue is the anagram.
+</p>
+
+<div class='vertspace1'></div>
+<p>
+<code>Spin doctor live, on tour (10)</code>
+</p>
+
+<div class='vertspace1'></div>
+<p>
+Many many words can be anagram indicators: anything that suggests letters being
+potentially changed, upset, moved, made anew, etc.
+</p>
+
+<div class='vertspace1'></div>
+<p class="fragment (appear)">
+<code>REVOLUTION</code><br />
+("doctor" LIVE ON TOUR)
+</p>
+
+</section>
+</section>
+<section>
+<section id="slide-org14998fc" data-background="./background_qr_code.png" data-background-size="2000px">
+<h2 id="org14998fc">Clue type: Hidden</h2>
+<div class='vertspace1'></div>
+<p>
+Another "easy" one.
+</p>
+
+<p>
+Sometimes (usually not more than once per puzzle) the answer
+is hidden directly inside the clue, either forwards or backwards. This is
+indicated by a suitable word like "some".
+</p>
+
+<p>
+You would <i>think</i> this would make it easy.
+</p>
+
+<div class='vertspace1'></div>
+<p>
+<code>Maybe wearing some larger undies (6)</code>
+</p>
+
+<div class='vertspace1'></div>
+<p class="fragment (appear)">
+<code>GERUND</code><br />
+("wearing" is one example &#x2013; "maybe" &#x2013; of a gerund)
+</p>
+
+</section>
+</section>
+<section>
+<section id="slide-org0e057f6" data-background="./background_qr_code.png" data-background-size="2000px">
+<h2 id="org0e057f6">Clue type: Cryptic Definition</h2>
+<div class='vertspace1'></div>
+<p>
+Sometimes* the answer is clued in a playful way.
+</p>
+
+<div class='vertspace1'></div>
+<p>
+<code>Fallout when the deal is subjected to cuts? (7)</code>
+</p>
+
+<div class='vertspace1'></div>
+<p>
+*Almost always. Straight definitions are rare and<br />
+would be considered poor in a cryptic clue.
+</p>
+
+<div class='vertspace1'></div>
+<p class="fragment (appear)">
+<code>SAWDUST</code><br />
+(<b>deal</b>​² <i>noun</i> a plank or planks of soft wood)
+</p>
+
+</section>
+</section>
+<section>
+<section id="slide-orgb4bfc69" data-background="./background_qr_code.png" data-background-size="2000px">
+<h2 id="orgb4bfc69">Clue type: Double Definition</h2>
+<div class='vertspace1'></div>
+<p>
+A two word clue is very often a double definition.
+</p>
+
+<p>
+Both words, interpreted in the right way, mean the same thing - the answer.
+</p>
+
+<div class='vertspace1'></div>
+<p>
+<code>Potty train (4)</code>
+</p>
+
+<div class='vertspace1'></div>
+<p>
+DDs can be more than two words, of course.
+</p>
+
+<div class='vertspace1'></div>
+<p class="fragment (appear)">
+<code>LOCO</code><br />
+(<b>potty</b>​¹ <i>adj</i> <i>colloq</i> mad; crazy)
+</p>
+
+</section>
+</section>
+<section>
+<section id="slide-orga98d33a" data-background="./background_qr_code.png" data-background-size="2000px">
+<h2 id="orga98d33a">Clue type: Charade</h2>
+<div class='vertspace1'></div>
+<p>
+A very common type of clue has the answer made up from parts put together. The
+parts might be obtained using other tricks in the setter's arsenal.
+</p>
+
+<div class='vertspace1'></div>
+<p>
+<code>Former lover can court no more (7)</code>
+</p>
+
+<div class='vertspace1'></div>
+<p class="fragment (appear)">
+<code>EXTINCT</code><br />
+("former lover" = EX, "can" = TIN, "court" = CT)
+</p>
+
+</section>
+</section>
+<section>
+<section id="slide-orgb9ccea8" data-background="./background_qr_code.png" data-background-size="2000px">
+<h2 id="orgb9ccea8">Other Common Devices</h2>
+<div class='vertspace1'></div>
+<ul>
+<li>Using letters from the start/end/middle of words</li>
+<li>Letter deletions from words</li>
+<li>Taking alternate letters from a word</li>
+<li>Reversing words</li>
+<li>Substitutions</li>
+<li>Spoonerisms</li>
+<li>Homophones (it helps to have a British accent)</li>
+
+</ul>
+
+<div class='vertspace1'></div>
+<p>
+<code>Cut disease with unlimited money (1-4)</code>
+</p>
+
+<div class='vertspace1'></div>
+<p class="fragment (appear)">
+<code>T-BONE</code>
+</p>
+
+</section>
+</section>
+<section>
+<section id="slide-org03d2650" data-background="./background_qr_code.png" data-background-size="2000px">
+<h2 id="org03d2650">Abbreviations</h2>
+<div class='vertspace1'></div>
+<p>
+You would be surprised how many meanings are given (<i>in the dictionary</i>)<br />
+to each single letter.
+</p>
+
+<p>
+But: you <i>cannot just</i> abbreviate any word to its initial letter;<br />
+it <i>must</i> be in the dictionary (often Chambers).
+</p>
+
+<p>
+e.g. The letter R is fairly clued by any of:<br />
+right, river, King (<i>Rex</i>), Queen (<i>Regina</i>), resistance, run.<br />
+Or even: take (<i>recipe</i>)!
+</p>
+
+<p>
+But not e.g. rabbit.
+</p>
+
+</section>
+</section>
+<section>
+<section id="slide-orgc6f4f82" data-background="./background_qr_code.png" data-background-size="2000px">
+<h2 id="orgc6f4f82">Clue type: &amp;lit</h2>
+<div class='vertspace1'></div>
+<p>
+The "holy grail" clue where the whole clue is both the definition and the
+wordplay. Quite rare.
+</p>
+
+<div class='vertspace1'></div>
+<p>
+<code>A position with game in front of it (6)</code>
+</p>
+
+<div class='vertspace1'></div>
+<p class="fragment (appear)">
+<code>GOALIE</code><br />
+("A position" = A LIE, "game" = GO)
+</p>
+
+</section>
+</section>
+<section>
+<section id="slide-org713577c" data-background="./background_qr_code.png" data-background-size="2000px">
+<h2 id="org713577c">A thing of beauty</h2>
+<div class='vertspace1'></div>
+<p>
+Sometimes a clue can be so good, it makes your whole week.
+</p>
+
+<div class='vertspace1'></div>
+<p>
+<code>Such sickness and suffering originate with medic, ultimately (10)</code>
+</p>
+
+<div class='vertspace1'></div>
+<p class="fragment (appear)">
+<code>IATROGENIC</code><br />
+(Anagram [suffering] of ORIGINATE with last letter [ultimately] of mediC)
+</p>
+
+</section>
+</section>
+<section>
+<section id="slide-org7da0149" data-background="./background_qr_code.png" data-background-size="2000px">
+<h2 id="org7da0149">Styles and setters</h2>
+<div class='vertspace1'></div>
+<p>
+Each crossword is the work of one person (the <i>setter</i>).<br />
+Different setters have different styles.
+</p>
+
+<ul>
+<li>When I see Fed, it's going to involve lots of letter-play, some deviousness</li>
+<li>When I see Paul, there's going to be cross-referential clues, risque surfaces</li>
+<li>When I see Pasquale, there will be some recondite words</li>
+<li>When I see Brummie or Picaroon, I'm good - it's going to be chewy but doable</li>
+<li>When I see Imogen, I cry&#x2026; I am not on their wavelength at all</li>
+
+</ul>
+
+<p>
+A setter's job is to put up a good fight, and lose bravely.
+</p>
+
+<p>
+RIP Nutmeg, one of the best for smooth surfaces and fair clueing.
+</p>
+
+</section>
+</section>
+<section>
+<section id="slide-org911d9fc" data-background="./background_qr_code.png" data-background-size="2000px">
+<h2 id="org911d9fc">Cryptics affect your mind</h2>
+<div class='vertspace1'></div>
+<table style="margin:0 auto">
+<tbody><tr><th>You see...</th><th>You think...</th></tr>
+<tr><td>"banker" or "flower"</td><td>river</td></tr>
+<tr><td>"issue"</td><td>children</td></tr>
+<tr><td>"sweetheart"</td><td>E</td></tr>
+<tr><td>"unknown"</td><td>X, Y, Z</td></tr>
+<tr><td>"corporation"</td><td>tum</td></tr>
+<tr><td>"Nice day"</td><td>jour</td></tr>
+<tr><td>"leg"</td><td>on</td></tr>
+<tr><td>"posh"</td><td>U</td></tr>
+</tbody></table>
+
+</section>
+</section>
+<section>
+<section id="slide-orgdfb9ccc" data-background="./background_qr_code.png" data-background-size="2000px">
+<h2 id="orgdfb9ccc">How on earth&#x2026;?</h2>
+<div class='vertspace1'></div>
+<p>
+You get reasonably good at them after some years (decades?) of daily practice.
+</p>
+
+<div class='vertspace1'></div>
+<p>
+Among many other things, you should have some knowledge of: Greek/Roman/Norse
+myths; classic (and classical) literature; Shakespeare; current events;
+pre-decimal British currency; military abbreviations; sporting and gaming terms,
+especially cricket, golf, chess, and bridge; musical terms; high school French;
+Latin phrases; the NATO alphabet; Roman numerals; Greek letters; the Periodic
+Table; countries; cities; rivers; currencies; Cockney rhyming slang; and short
+synonyms and examples of anything and everything.
+</p>
+
+</section>
+</section>
+<section>
+<section id="slide-org4d09d4a" data-background="./background_qr_code.png" data-background-size="2000px">
+<h2 id="org4d09d4a">Now for the question</h2>
+<div class='vertspace1'></div>
+<p>
+Can ChatGPT solve cryptic crossword clues?
+</p>
+
+<p>
+Of course, the answer is: no.
+</p>
+
+<p>
+Ironically, cryptics <i>are</i> quite doable by specialized programs&#x2026;
+</p>
+
+</section>
+</section>
+<section>
+<section id="slide-orgf4dc3ac" data-background="./background_qr_code.png" data-background-size="2000px">
+<h2 id="orgf4dc3ac">A short conversation</h2>
+<p>
+"I'm going to give you cryptic crossword clues and I'd like you to solve them
+and explain the solution.
+</p>
+
+<div class='vertspace1'></div>
+
+<p class="fragment (appear)">
+"Sure! I'd be happy to help you solve cryptic crossword clues.
+</p>
+
+<p class="fragment (appear)">
+To solve a cryptic crossword clue, [<span style="color:#830352">blah blah blah explanation we don't need</span>].
+</p>
+
+<p class="fragment (appear)">
+To start, could you give me one of the clues that you would like me to solve?
+</p>
+
+</section>
+</section>
+<section>
+<section id="slide-org0064813" data-background="./background_qr_code.png" data-background-size="2000px">
+<h2 id="org0064813">A short conversation</h2>
+<p>
+"Owl pursuing pussycat that's possibly ours, grabbing it (6)"
+</p>
+
+<p class="fragment (appear)">
+"In this clue, the word "owl" is a hint<br />
+that the answer is a type of bird. [<span style="color:#830352">wrong</span>]
+</p>
+
+<p class="fragment (appear)">
+The word "pursuing" suggests that the answer is something that is following or
+chasing something else, which could be the word "pussycat." [<span style="color:#830352">uhhh...</span>]
+</p>
+
+<p class="fragment (appear)">
+The word "that's possibly ours" could be a hint that the answer is a word that
+sounds like "ours." [<span style="color:#830352">wrong</span>]
+</p>
+
+<p class="fragment (appear)">
+Taking all of these clues into consideration, it seems likely that the answer to
+this clue is the word "spoon." [<span style="color:#830352">wrong</span>]
+</p>
+
+<p class="fragment (appear)">
+"Spoon" is a type of bird that is known for its ability to follow and chase
+insects, and it also sounds like the word "pursue." [<span style="color:#830352">???</span>]
+</p>
+
+<p class="fragment (appear)">
+"Grabbing" the word "pussycat" could be a hint that the answer is a type of
+spoon, such as a dessert spoon or a tablespoon. The answer to this clue is
+therefore "SPOON."
+</p>
+
+</section>
+</section>
+<section>
+<section id="slide-org93f87a3" data-background="./background_qr_code.png" data-background-size="2000px">
+<h2 id="org93f87a3">A short conversation</h2>
+<p>
+"That's not right. The answer is SUITOR. Can you explain why?
+</p>
+
+<p class="fragment (appear)">
+"I apologize for the mistake in my previous response. You are correct that the
+answer to this clue is SUITOR.
+</p>
+
+<p class="fragment (appear)">
+[blah blah blah]
+</p>
+
+<p class="fragment (appear)">
+When we put these two clues together, we get the word "SUITOR," which fits the
+definition of the answer and also sounds like "pussycat" and "ours."
+</p>
+
+<p class="fragment (appear)">
+Therefore, the answer to this clue is SUITOR.
+</p>
+
+</section>
+</section>
+<section>
+<section id="slide-org8439051" data-background="./background_qr_code.png" data-background-size="2000px">
+<h2 id="org8439051">LLMs will never do cryptics</h2>
+<div class='vertspace1'></div>
+<p>
+There are some things LLMs will (<i>should</i>) never do.
+</p>
+
+<p>
+Cryptic crosswords are in that category.
+</p>
+
+<div class='vertspace1'></div>
+<p>
+<code>Prince left island country to pursue posh college dream (13)</code>
+</p>
+
+<ul>
+<li>The <i>point</i> of a cryptic clue is to <i>subvert the normal</i> interpretation (the opposite of</li>
+
+</ul>
+<p>
+what LLMs are designed to deal with)
+</p>
+
+<ul>
+<li>Solving a cryptic is like reading a book: it's a connection with the author.</li>
+
+</ul>
+<p>
+What would be the point of using a computer?
+</p>
+
+
+</section>
+</section>
+<section>
+<section id="slide-org7fa5b1d" data-background="./background_qr_code.png" data-background-size="2000px">
+<h2 id="org7fa5b1d">Thank you</h2>
+<div class='vertspace1'></div>
+<p>
+Try this CppCon cryptic crossword!
+</p>
+
+<img src="qr_code.png" style="height:600px">
+</section>
+</section>
+</div>
+</div>
+<script src="../reveal.js/dist/reveal.js"></script>
+<script src="../reveal.js/plugin/markdown/markdown.js"></script>
+<script src="../reveal.js/plugin/notes/notes.js"></script>
+<script src="../reveal.js/plugin/search/search.js"></script>
+<script src="../reveal.js/plugin/zoom/zoom.js"></script>
+<script>
+// Full list of configuration options available here:
+// https://github.com/hakimel/reveal.js#configuration
+Reveal.initialize({
+
+controls: false,
+progress: false,
+history: false,
+center: true,
+slideNumber: 'c/t',
+rollingLinks: false,
+keyboard: true,
+mouseWheel: false,
+fragmentInURL: false,
+hashOneBasedIndex: false,
+pdfSeparateFragments: true,
+overview: true,
+width: 1600,
+height: 900,
+margin: 0.10,
+minScale: 0.50,
+maxScale: 2.50,
+
+transition: 'none',
+transitionSpeed: 'default',
+
+// Plugins with reveal.js 4.x
+plugins: [ RevealMarkdown, RevealNotes, RevealSearch, RevealZoom ],
+
+// Optional libraries used to extend reveal.js
+dependencies: [
+]
+
+});
+</script>
+</body>
+</html>
